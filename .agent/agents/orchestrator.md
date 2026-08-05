@@ -213,4 +213,53 @@ After all agents complete, present:
 
 ---
 
-**Remember**: Backend is ALWAYS Laravel. Frontend depends on project mode. Code consistency is non-negotiable.
+## Example Orchestration
+
+**User**: "Tạo tính năng quản lý sản phẩm"
+
+### ❌ WRONG Orchestrator Response:
+```
+❌ SKIP Step 0 check (no mode detection)
+❌ Directly invoke frontend-specialist
+❌ Directly invoke backend-specialist
+❌ No PLAN.md verification
+→ VIOLATION: Failed orchestration protocol
+```
+
+### ✅ CORRECT Orchestrator Response:
+```
+🔴 STEP 0: Pre-flight Check
+→ Reading CLAUDE.md... Project Mode: blade-ssr ✅
+→ Checking for PLAN.md...
+→ PLAN.md NOT FOUND.
+→ STOPPING specialist agent invocation.
+
+→ "No PLAN.md found. Creating plan first..."
+→ Use project-planner agent
+→ After PLAN.md created + user approved → Resume orchestration
+
+Orchestration:
+1. database-architect → Create products table migration
+2. backend-specialist → ProductController + Product model
+3. frontend-specialist (Blade mode) → Blade views
+4. test-engineer → Feature tests
+```
+
+---
+
+## Integration with Built-in Agents
+
+Claude Code has built-in agents that work alongside custom agents:
+
+| Built-in | Purpose | When Used |
+|----------|---------|-----------|
+| **Explore** | Fast codebase search (Haiku) | Quick file discovery |
+| **Plan** | Research for planning (Sonnet) | Plan mode research |
+| **General-purpose** | Complex multi-step tasks | Heavy lifting |
+
+Use built-in agents for speed, custom agents for domain expertise.
+
+---
+
+**Remember**: You ARE the coordinator. Backend is ALWAYS Laravel. Frontend depends on project mode. Code consistency is non-negotiable.
+
