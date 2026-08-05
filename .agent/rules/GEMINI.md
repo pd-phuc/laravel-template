@@ -2,9 +2,11 @@
 trigger: always_on
 ---
 
-# GEMINI.md - Antigravity Kit
+# GEMINI.md - Laravel Template
 
-> This file defines how the AI behaves in this workspace.
+> This file defines how the AI behaves in this Laravel workspace.
+> Backend is ALWAYS Laravel. Frontend depends on Project Mode (blade-ssr or react-spa).
+> Read CLAUDE.md for `## Project Mode:` before any code work.
 
 ---
 
@@ -147,15 +149,29 @@ When user's prompt is NOT in English:
 
 ## TIER 1: CODE RULES (When Writing Code)
 
-### 📱 Project Type Routing
+### 🔍 Project Mode Detection (FIRST)
 
-| Project Type                           | Primary Agent         | Skills                        |
-| -------------------------------------- | --------------------- | ----------------------------- |
-| **MOBILE** (iOS, Android, RN, Flutter) | `mobile-developer`    | mobile-design                 |
-| **WEB** (Next.js, React web)           | `frontend-specialist` | frontend-design               |
-| **BACKEND** (API, server, DB)          | `backend-specialist`  | api-patterns, database-design |
+Read `CLAUDE.md` → find `## Project Mode:` → set mode.
 
-> 🔴 **Mobile + frontend-specialist = WRONG.** Mobile = mobile-developer ONLY.
+| Project Mode | Backend | Frontend | Primary Skills |
+|-------------|---------|----------|----------------|
+| **blade-ssr** | Laravel (controllers → views) | Blade + Tailwind + Alpine.js | laravel-conventions, frontend-design |
+| **react-spa** | Laravel (controllers → JSON) | React + Vite + Tailwind | laravel-conventions, react-patterns |
+| **not set** | Laravel (default blade-ssr) | Ask user or run onboarding | project-onboarding |
+
+> 🔴 **Backend is ALWAYS Laravel.** Never route to Node.js, NestJS, or Prisma skills.
+
+### 🛡️ Code Consistency (MANDATORY)
+
+**ALL code changes MUST follow `@[skills/code-consistency]` rules:**
+
+1. Only touch files related to the current task
+2. Follow existing code patterns (don't introduce new ones unless asked)
+3. Minimal diffs — smallest change possible
+4. Never modify existing migrations
+5. Preserve all comments and docblocks
+
+> 🔴 **Violation of code consistency = FAILED implementation.**
 
 ### 🛑 Socratic Gate
 
@@ -260,14 +276,27 @@ When user's prompt is NOT in English:
 
 ### Agents & Skills
 
-- **Masters**: `orchestrator`, `project-planner`, `security-auditor` (Cyber/Audit), `backend-specialist` (API/DB), `frontend-specialist` (UI/UX), `mobile-developer`, `debugger`, `game-developer`
-- **Key Skills**: `clean-code`, `brainstorming`, `app-builder`, `frontend-design`, `mobile-design`, `plan-writing`, `behavioral-modes`
+- **Orchestrator**: `orchestrator` — Multi-agent coordination, mode-aware routing
+- **Backend**: `backend-specialist` — Laravel controllers, models, services, Eloquent
+- **Frontend**: `frontend-specialist` — Blade (blade-ssr) or React (react-spa)
+- **Database**: `database-architect` — Migrations, schema, query optimization
+- **Security**: `security-auditor` — Auth, Sanctum, middleware, OWASP
+- **Testing**: `test-engineer` — Pest/PHPUnit, feature tests
+- **Planner**: `project-planner` — Task breakdown, planning
 
-### Key Scripts
+### Laravel-Specific Skills
 
-- **Verify**: `.agent/scripts/verify_all.py`, `.agent/scripts/checklist.py`
-- **Scanners**: `security_scan.py`, `dependency_analyzer.py`
-- **Audits**: `ux_audit.py`, `mobile_audit.py`, `lighthouse_audit.py`, `seo_checker.py`
-- **Test**: `playwright_runner.py`, `test_runner.py`
+- `project-onboarding` — Interview user → generate docs
+- `laravel-conventions` — Controller, route, Eloquent patterns
+- `laravel-migration-workflow` — Safe schema changes, factories, seeders
+- `code-consistency` — Prevent unnecessary code modifications
+- `laravel-eloquent-conventions` — Model best practices
+
+### Key Commands
+
+- `composer dev` — Full dev environment
+- `composer test` — Run tests
+- `composer lint` — Check code style
+- `composer format` — Auto-fix code style
 
 ---
