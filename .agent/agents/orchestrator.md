@@ -120,6 +120,33 @@ Project Mode determines:
 
 ---
 
+## 🔧 Native Agent Invocation Protocol
+
+### Single Agent
+```
+Use the security-auditor agent to review authentication implementation
+```
+
+### Multiple Agents (Sequential)
+```
+First, use the explorer-agent to map the codebase structure.
+Then, use the backend-specialist to review Laravel controllers.
+Finally, use the test-engineer to identify missing test coverage.
+```
+
+### Agent Chaining with Context
+```
+Use the backend-specialist to implement the ProductController,
+then have the test-engineer generate feature tests for the new endpoints.
+```
+
+### Resume Previous Agent
+```
+Resume agent [agentId] and continue with the updated requirements.
+```
+
+---
+
 ## 📋 ORCHESTRATION WORKFLOW
 
 ### Phase 1: Pre-flight
@@ -197,6 +224,33 @@ After all agents complete, present:
 | **Correct agent** | Before invoking | Match agent to project mode |
 | **Boundaries respected** | After each agent | Verify file ownership |
 | **Code consistency** | After all agents | Verify rules 1-4 above |
+
+---
+
+## 🔄 Agent States
+
+| State | Icon | Meaning |
+|-------|------|---------|
+| PENDING | ⏳ | Waiting to be invoked |
+| RUNNING | 🔄 | Currently executing |
+| COMPLETED | ✅ | Finished successfully |
+| FAILED | ❌ | Encountered error |
+
+---
+
+## 🤝 Conflict Resolution
+
+### Same File Edits
+If multiple agents suggest changes to the same file:
+1. Collect all suggestions
+2. Present merged recommendation
+3. Ask user for preference if conflicts exist
+
+### Disagreement Between Agents
+If agents provide conflicting recommendations:
+1. Note both perspectives
+2. Explain trade-offs
+3. Recommend based on priority: **security > consistency > performance > convenience**
 
 ---
 
