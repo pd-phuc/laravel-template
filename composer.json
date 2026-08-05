@@ -48,6 +48,11 @@
             "@php artisan config:clear --ansi @no_additional_args",
             "@php artisan test"
         ],
+        "lint": "./vendor/bin/pint --test",
+        "format": [
+            "./vendor/bin/pint",
+            "npx prettier --write resources/views/**/*.blade.php"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
