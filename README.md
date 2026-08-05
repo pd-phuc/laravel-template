@@ -1,58 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Template
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Production-ready Laravel template with professional workflow, AI agent integration, and dual-mode auth (Session + Sanctum API).
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## ⚡ Quick Start
 
 ```bash
-composer require laravel/boost --dev
+# 1. Clone the template
+git clone <repo-url> my-project
+cd my-project
 
-php artisan boost:install
+# 2. Install dependencies and setup
+composer setup
+
+# 3. Configure database
+# Edit .env → set DB_DATABASE, DB_USERNAME, DB_PASSWORD
+
+# 4. Run migrations
+php artisan migrate
+
+# 5. Start development
+composer dev
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## 🛠️ Commands
 
-## Contributing
+| Command | Description |
+|---------|-------------|
+| `composer setup` | Install all deps, generate key, migrate, build assets |
+| `composer dev` | Run server + queue + logs + Vite concurrently |
+| `composer test` | Run test suite |
+| `composer lint` | Check code style (Pint, no changes) |
+| `composer format` | Auto-fix code style (Pint + Prettier) |
+| `npm run dev` | Vite dev server only |
+| `npm run build` | Build production assets |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🏗️ Architecture
 
-## Code of Conduct
+### Request Flow
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+Web:  routes/web.php  → Controllers/     → Models → views/
+API:  routes/api.php  → Controllers/Api/ → Models → JSON
+```
 
-## Security Vulnerabilities
+### Authentication
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Mode | Guard | Controller | Use Case |
+|------|-------|-----------|----------|
+| Session | `web` | `Auth\LoginController` | Browser, Blade views |
+| Token | `sanctum` | `Api\AuthController` | Mobile app, SPA, 3rd party |
 
-## License
+### Folder Structure
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── Auth/           # Web session auth
+│   │   ├── Api/            # API token auth (Sanctum)
+│   │   └── Admin/          # Admin panel (create as needed)
+│   └── Middleware/
+│       └── EnsureIsAdmin.php
+├── Models/
+└── Providers/
+
+routes/
+├── web.php                  # Session-based routes
+├── api.php                  # Sanctum-guarded API routes
+└── console.php
+
+resources/
+├── views/                   # Blade templates
+├── css/app.css              # Tailwind CSS entry
+└── js/app.js                # JavaScript entry
+```
+
+## 🔧 Code Quality
+
+| Tool | Purpose | Config |
+|------|---------|--------|
+| **Pint** | PHP code style | `pint.json` |
+| **Prettier** | Blade/JS/CSS formatting | `.prettierrc` |
+| **Husky** | Git hooks | `.husky/` |
+| **Commitlint** | Commit message format | `commitlint.config.cjs` |
+| **Lint-staged** | Pre-commit auto-format | `package.json` |
+| **EditorConfig** | Editor consistency | `.editorconfig` |
+
+### Commit Convention
+
+```
+<type>(<scope>): <subject>
+
+# Types: feat, fix, docs, style, refactor, perf, test, chore, revert, ci
+# Examples:
+feat(auth): add google oauth login
+fix(search): normalize phone number format
+docs: update api documentation
+```
+
+## 🤖 AI Agent Integration
+
+This template includes pre-configured instructions for AI coding assistants:
+
+| File | Agent |
+|------|-------|
+| `CLAUDE.md` | Claude Code |
+| `AGENTS.md` | Gemini / Antigravity |
+| `.agent/` | 20 specialist agents, 49 skills, 11 workflows |
+| `.claude/` | 75 Claude-specific skills |
+
+## 📋 Tech Stack
+
+- **PHP** 8.3+ / **Laravel** 13
+- **Vite** 8 + **Tailwind CSS** 4
+- **MySQL** (configurable via `.env`)
+- **Laravel Sanctum** (API token auth)
+- **PHPUnit** (testing)
+- **Laravel Pint** (PHP code style)
