@@ -76,3 +76,21 @@ Vite entry: `resources/css/app.css` (Tailwind) + `resources/js/app.js`. `@vite` 
 - `app/Models/User.php` — User model with HasApiTokens + role
 - `composer.json` — All dev/build/test/lint/format scripts
 - `bootstrap/app.php` — Route registration, middleware, exception handling
+
+## Code Consistency (CRITICAL)
+
+1. **Only touch files related to the current task** — no drive-by refactors
+2. **Follow existing patterns** — don't introduce new patterns unless explicitly asked
+3. **Minimal diffs** — smallest change that achieves the goal
+4. **Never modify existing migrations** — always create new ones
+5. **Preserve all comments and docblocks** — even Vietnamese ones
+
+See `.agent/skills/code-consistency/SKILL.md` for full rules.
+
+## Project Onboarding
+
+When starting a new project from this template, run the onboarding flow:
+- Read `.agent/skills/project-onboarding/SKILL.md`
+- Interview the user about domain, models, auth strategy, project mode
+- Update this file (CLAUDE.md) with project-specific information
+
